@@ -19,6 +19,7 @@ wire [7:0] PCH = PC[15:8];
 wire [7:0] ADL = AD[7:0];
 wire [7:0] ADH = AD[15:8];
 
+assign RW = 1;
 reg D_rdy = 0;
 
 always @(posedge clk) begin

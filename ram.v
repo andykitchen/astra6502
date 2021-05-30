@@ -10,7 +10,7 @@ module ram
 	output reg  [7:0]  D_out
 );
 
-reg [7:0] mem [1023:0];
+reg [7:0] mem [SIZE-1:0];
 
 always @(posedge clk)
 	if (RW)
