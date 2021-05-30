@@ -7,6 +7,8 @@ module core
 	output wire [7:0]  D_out
 );
 
+// program registers
+
 reg [15:0] PC = 0;
 
 reg  [7:0] A;
@@ -18,6 +20,9 @@ reg  [7:0] P;
 
 wire [7:0] PCL = PC[7:0];
 wire [7:0] PCH = PC[15:8];
+
+
+// ALU
 
 wire [7:0] ALU_A;
 wire [7:0] ALU_B;
@@ -34,20 +39,27 @@ alu ALU (
 	.op_and (ALU_and)
 );
 
+
 // stage registers (one hot)
+
 reg fetch  = 1; // instruction fetch
 reg decode = 0; // instruction decode
 reg exec   = 0; // execution
 
-wire bork = !(fetch || decode || exec); // for debug
+wire bork  = !(fetch || decode || exec); // for debug
 
 
-// control registers
-reg A_from_D   = 0; // load A from D
-reg A_from_ALU = 0; // load A from ALU
+// control signals
+
+reg  A_from_D   = 0; // load A from D
+reg  A_from_ALU = 0; // load A from ALU
+
+wire AD_from_PC = fetch || (decode && im_addr);
+wire PC_inc     = AD_from_PC;
 
 
 // decode logic
+
 wire [7:0] op = decode ? D_in : 8'bX;
 
 wire NOP     = (op == 8'hCE);
@@ -57,18 +69,28 @@ wire AND_im  = (op == 8'h29);
 
 wire im_addr = (op[3:0] == 4'h9 && !op[4]); // immediate addressing?
 
+
+// routing logic
+
+wire [7:0] A_mux, PC_mux, X_mux, Y_mux;
+
+assign PC_mux =
+	PC_inc ? PC+1 :
+	PC;
+
 assign RW = 1;
 assign AD =
-	fetch  ? PC :
-	decode ? (im_addr ? PC : 16'bX) :
+	AD_from_PC ? PC :
 	16'bX;
 
-wire PC_inc = fetch || (decode && im_addr); // increment program counter?
-
-wire [7:0] A_mux =
+assign A_mux =
 	A_from_D   ? D_in  :
 	A_from_ALU ? ALU_C :
 	A;
+
+// The following are placeholders
+assign X_mux = X;
+assign Y_mux = Y;
 
 assign D_out = A;
 
@@ -77,10 +99,10 @@ assign ALU_B = D_in;
 
 
 always @(posedge clk) begin
-	PC <= PC;
+	PC <= PC_mux;
 	A  <= A_mux;
-	X  <= X;
-	Y  <= Y;
+	X  <= X_mux;
+	Y  <= Y_mux;
 
 	S  <= S;
 	P  <= P;
@@ -94,9 +116,6 @@ always @(posedge clk) begin
 
 	ALU_add    <= 0;
 	ALU_and    <= 0;
-
-	if (PC_inc)
-		PC <= PC+1;
 
 	if (fetch)
 		decode <= 1;
