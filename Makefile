@@ -1,7 +1,7 @@
 all: core_tb.vcd
 
 core_tb.vvp: core_tb.v core.v ram.v
-	iverilog -o core_tb.vvp core_tb.v core.v ram.v
+	iverilog -o core_tb.vvp core_tb.v core.v alu.v ram.v
 
 core_tb.vcd: core_tb.vvp
 	vvp core_tb.vvp

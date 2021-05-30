@@ -13,7 +13,7 @@ wire [7:0]  D_out;
 
 wire [15:0] A;
 
-core UUT (
+core CPU (
 	.clk   (clk),
 	.RW    (RW),
 	.AD    (AD),
@@ -24,7 +24,7 @@ core UUT (
 // only wire up the low 10-bits of AD
 assign A = {6'b0, AD[9:0]};
 
-ram test_ram (
+ram RAM (
 	.clk   (clk),
 	.RW    (RW),
 	.A     (A),
@@ -41,11 +41,16 @@ initial begin
 
 	// zero ram
 	for (i = 0; i < 1024; i++)
-		test_ram.mem[i] = 8'b0;
+		RAM.mem[i] = 8'b0;
 
 	// write some test data into ram
-	for (i = 0; i < 8; i++)
-		test_ram.mem[i] = 8'hCE;
+	RAM.mem[0] = 8'hCE; // NOP
+	RAM.mem[1] = 8'hA9; // LDA #55
+	RAM.mem[2] = 8'h55;
+	RAM.mem[3] = 8'h69; // ADC #03
+	RAM.mem[4] = 8'h03;
+	RAM.mem[5] = 8'h29; // AND #F0
+	RAM.mem[6] = 8'hF0;
 
 	#1000 $finish;
 end
