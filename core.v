@@ -62,7 +62,7 @@ wire PC_inc     = AD_from_PC;
 
 wire [7:0] op = decode ? D_in : 8'bX;
 
-wire NOP     = (op == 8'hCE);
+wire NOP     = (op == 8'hEA);
 wire LDA_im  = (op == 8'hA9);
 wire ADC_im  = (op == 8'h69);
 wire AND_im  = (op == 8'h29);

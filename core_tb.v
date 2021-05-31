@@ -44,7 +44,7 @@ initial begin
 		RAM.mem[i] = 8'b0;
 
 	// write some test data into ram
-	RAM.mem[0] = 8'hCE; // NOP
+	RAM.mem[0] = 8'hEA; // NOP
 	RAM.mem[1] = 8'hA9; // LDA #55
 	RAM.mem[2] = 8'h55;
 	RAM.mem[3] = 8'h69; // ADC #03
