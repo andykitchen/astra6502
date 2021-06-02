@@ -5,7 +5,7 @@ module ram
 (
 	input  wire        clk,
 	input  wire        RW,
-// only wire up the low 10-bits of AD
+// only wire up the low 10-bits of A
 	input  wire [9:0]  A,
 	input  wire [7:0]  D_in,
 	output reg  [7:0]  D_out

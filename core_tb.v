@@ -11,7 +11,7 @@ wire [15:0] AD;
 wire [7:0]  D_in;
 wire [7:0]  D_out;
 
-wire [15:0] A;
+wire [9:0] A;
 
 core CPU (
 	.clk   (clk),
@@ -21,8 +21,8 @@ core CPU (
 	.D_out (D_out)
 );
 
-// only wire up the low 10-bits of AD
-assign A = {6'b0, AD[9:0]};
+// only wire up the low 10-bits of AD to A
+assign A = AD[9:0];
 
 ram RAM (
 	.clk   (clk),
