@@ -14,8 +14,8 @@ reg [7:0] mem [SIZE-1:0];
 
 always @(posedge clk)
 	if (RW)
-		D_out  <= mem[A];
+		D_out  <= mem[A[9:0]];
 	else
-		mem[A] <= D_in;
+		mem[A[9:0]] <= D_in;
 
 endmodule
