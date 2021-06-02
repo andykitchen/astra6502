@@ -38,7 +38,7 @@ alu ALU (
 	.C (ALU_C),
 	.op_add (ALU_add),
 	.op_and (ALU_and),
-	.op_or  (ALU_or),
+	.op_or  (ALU_or)
 );
 
 
