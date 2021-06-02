@@ -74,10 +74,11 @@ wire im_addr = (op[3:0] == 4'h9 && !op[4]); // immediate addressing?
 
 // routing logic
 
-wire [7:0] A_mux, PC_mux, X_mux, Y_mux;
+wire [15:0] PC_mux;
+wire [7:0] A_mux, X_mux, Y_mux;
 
 assign PC_mux =
-	PC_inc ? PC+1 :
+	PC_inc ? PC + 1 :
 	PC;
 
 assign RW = 1;
