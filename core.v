@@ -30,13 +30,15 @@ wire [7:0] ALU_C;
 
 reg ALU_add = 0;
 reg ALU_and = 0;
+reg ALU_or  = 0;
 
 alu ALU (
 	.A (ALU_A),
 	.B (ALU_B),
 	.C (ALU_C),
 	.op_add (ALU_add),
-	.op_and (ALU_and)
+	.op_and (ALU_and),
+	.op_or  (ALU_or),
 );
 
 
