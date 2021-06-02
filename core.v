@@ -64,12 +64,13 @@ wire PC_inc     = AD_from_PC;
 
 wire [7:0] op = decode ? D_in : 8'bX;
 
-wire NOP     = (op == 8'hEA);
-wire LDA_im  = (op == 8'hA9);
-wire ADC_im  = (op == 8'h69);
+wire ORA_im  = (op == 8'h09);
 wire AND_im  = (op == 8'h29);
+wire ADC_im  = (op == 8'h69);
+wire LDA_im  = (op == 8'hA9);
+wire NOP     = (op == 8'hEA);
 
-wire im_addr = (op[3:0] == 4'h9 && !op[4]); // immediate addressing?
+wire im_addr = (op[3:0] == 4'h9 && !op[4]); // immediate addressing ?
 
 
 // routing logic
@@ -119,6 +120,7 @@ always @(posedge clk) begin
 
 	ALU_add    <= 0;
 	ALU_and    <= 0;
+	ALU_or     <= 0;
 
 	if (fetch)
 		decode <= 1;
@@ -131,9 +133,6 @@ always @(posedge clk) begin
 			fetch <= 1;
 		end
 
-		if (LDA_im)
-			A_from_D <= 1;
-
 		if (ADC_im) begin
 			A_from_ALU <= 1;
 			ALU_add    <= 1;
@@ -142,6 +141,14 @@ always @(posedge clk) begin
 		if (AND_im) begin
 			A_from_ALU <= 1;
 			ALU_and    <= 1;
+		end
+
+		if (LDA_im)
+			A_from_D <= 1;
+
+		if (ORA_im) begin
+			A_from_ALU <= 1;
+			ALU_or     <= 1;
 		end
 	end
 

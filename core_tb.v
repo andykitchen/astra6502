@@ -21,7 +21,7 @@ core CPU (
 	.D_out (D_out)
 );
 
-// only wire up the low 10-bits of AD to A
+// only wire up the low 10-bits of AD
 assign A = AD[9:0];
 
 ram RAM (
@@ -51,6 +51,8 @@ initial begin
 	RAM.mem[4] = 8'h03;
 	RAM.mem[5] = 8'h29; // AND #F0
 	RAM.mem[6] = 8'hF0;
+	RAM.mem[7] = 8'h09; // ORA #05
+	RAM.mem[8] = 8'h05;
 
 	#1000 $finish;
 end
