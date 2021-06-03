@@ -1,17 +1,15 @@
-`timescale 1ns / 10ps
+`timescale 100ns / 1ns
 
-module core_tb;
+module core_tb(input clk);
 
 integer i;
 
-reg clk = 0;
+// reg clk = 0;
 
 wire RW;
 wire [15:0] AD;
 wire [7:0]  D_in;
 wire [7:0]  D_out;
-
-wire [9:0] A;
 
 core CPU (
 	.clk   (clk),
@@ -21,19 +19,16 @@ core CPU (
 	.D_out (D_out)
 );
 
-// only wire up the low 10-bits of AD
-assign A = AD[9:0];
-
 ram RAM (
 	.clk   (clk),
 	.RW    (RW),
-	.A     (A),
+	.AD    (AD),
 	.D_in  (D_out),
 	.D_out (D_in)
 );
 
 
-always #5 clk = ~clk;
+// always clk = ~clk;
 
 initial begin
 	$dumpfile("core_tb.vcd");
@@ -53,8 +48,6 @@ initial begin
 	RAM.mem[6] = 8'hF0;
 	RAM.mem[7] = 8'h09; // ORA #05
 	RAM.mem[8] = 8'h05;
-
-	#1000 $finish;
 end
 
 endmodule

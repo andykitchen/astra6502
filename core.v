@@ -1,3 +1,5 @@
+`timescale 100ns / 1ns
+
 module core
 (
 	input  wire        clk,
@@ -18,8 +20,8 @@ reg  [7:0] Y;
 reg  [7:0] S;
 reg  [7:0] P;
 
-wire [7:0] PCL = PC[7:0];
-wire [7:0] PCH = PC[15:8];
+// wire [7:0] PCL = PC[7:0];
+// wire [7:0] PCH = PC[15:8];
 
 
 // ALU
@@ -48,7 +50,7 @@ reg fetch  = 1; // instruction fetch
 reg decode = 0; // instruction decode
 reg exec   = 0; // execution
 
-wire bork  = !(fetch || decode || exec); // for debug
+// wire bork  = !(fetch || decode || exec); // for debug
 
 
 // control signals
