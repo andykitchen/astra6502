@@ -1,10 +1,16 @@
 `timescale 100ns / 1ns
 
-module core_tb(input clk);
+// clocking is handled differently in verilator and iverilog
+`ifdef VERILATOR
+module core_tb (input wire clk);
+`else
+module core_tb;
+	reg clk = 0;
+	always #1 clk = ~clk;
+	always #100 $finish;
+`endif
 
 integer i;
-
-// reg clk = 0;
 
 wire RW;
 wire [15:0] AD;
@@ -27,8 +33,6 @@ ram RAM (
 	.D_out (D_in)
 );
 
-
-// always clk = ~clk;
 
 initial begin
 	$dumpfile("core_tb.fst");
