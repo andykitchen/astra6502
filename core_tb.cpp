@@ -13,6 +13,8 @@
  */
 
 #include <stdlib.h>
+#include <memory>
+
 #include "verilated_fst_c.h"  // "verilated.h" and "--trace"
 
 #include "Vcore_tb.h"
@@ -22,7 +24,7 @@ int main(int argc, char **argv) {
   Verilated::debug(0);  // 0 - 9
   Verilated::traceEverOn(true);  // required for "--trace" or "--trace-fst"
 
-  Vcore_tb *core_tb = new Vcore_tb;
+  auto core_tb = std::make_unique<Vcore_tb>();
 
   int counter = 0;
   while (! Verilated::gotFinish()  &&  ++ counter <= 100) {
@@ -34,6 +36,5 @@ int main(int argc, char **argv) {
   }
 
   core_tb->final();
-  delete core_tb;
   return(0);
 }
