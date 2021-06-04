@@ -31,7 +31,7 @@ ram RAM (
 // always clk = ~clk;
 
 initial begin
-	$dumpfile("core_tb.vcd");
+	$dumpfile("core_tb.fst");
 	$dumpvars(0, core_tb);
 
 	// zero ram

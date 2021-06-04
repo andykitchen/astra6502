@@ -1,7 +1,7 @@
 [*]
 [*] GTKWave Analyzer v3.3.110 (w)1999-2020 BSI
 [*]
-[dumpfile] "core_tb.vcd"
+[dumpfile] "core_tb.fst"
 [savefile] "core_tb.gtkw"
 [timestart] 0
 [size] 1910 600

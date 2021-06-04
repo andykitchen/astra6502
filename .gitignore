@@ -1,3 +1,4 @@
 *.vvp
 *.vcd
+*.fst
 obj_dir
