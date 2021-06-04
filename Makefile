@@ -12,6 +12,9 @@ gtkwave: core_tb.fst
 obj_dir/Vcore_tb: core_tb.cpp core_tb.v core.v alu.v ram.v
 	verilator --cc --build --exe -Wall --trace-fst -j `nproc` core_tb.cpp core_tb.v
 
+obj_dir/Vcore: core.cpp core.v alu.v ram.v
+	verilator --cc --build --exe -Wall --trace-fst -j `nproc` core.cpp core.v
+
 core_tb.fst: obj_dir/Vcore_tb
 	obj_dir/Vcore_tb
 
